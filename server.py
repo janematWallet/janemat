@@ -1,5 +1,6 @@
 import http.server
 import socketserver
+import playwright
 
 PORT = 8007
 
