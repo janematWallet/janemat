@@ -1,11 +1,23 @@
-import http.server
-import socketserver
-import playwright
+from flask import Flask, request, jsonify
 
-PORT = 8007
+app = Flask(__name__)
 
-Handler = http.server.SimpleHTTPRequestHandler
+# Главная страница
+@app.route('/')
+def home():
+    return "Сервер работает!"
 
-with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    print("serving at port", PORT)
-    httpd.serve_forever()
+# Пример API-эндпоинта
+@app.route('/api/data', methods=['GET'])
+def get_data():
+    sample_data = {"message": "Привет, мир!", "status": "ok"}
+    return jsonify(sample_data)
+
+# Пример POST-запроса
+@app.route('/api/echo', methods=['POST'])
+def echo():
+    data = request.json
+    return jsonify({"you_sent": data})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
